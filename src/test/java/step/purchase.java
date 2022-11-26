@@ -54,8 +54,8 @@ public class purchase {
 	public void user_input_valid_email_and_password() throws IOException {
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("fieldEmail"))).sendKeys(objData.getProperty("email"));
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("fieldPassword"))).sendKeys(objData.getProperty("password"));
-		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("buttonSignIn"))).click();
 		action.TakeScreenshot(action.driver,"2 loginpage "+action.timeStamp);
+		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("buttonSignIn"))).click();		
 		action.WaitUntil(By.xpath(objObjectHeader.getProperty("textAccount")));
 		action.TakeScreenshot(action.driver,"3 afterlogin "+action.timeStamp);
 	}
@@ -120,12 +120,12 @@ public class purchase {
 	@And("user fill the form")
 	public void user_fill_the_form() throws IOException {
 		
-		action.WaitUntil(By.xpath(objObjectHomepage.getProperty("textProductNameSummary1")));
+		action.WaitUntil(By.xpath(objObjectHomepage.getProperty("fieldAddress")));
 		
 		if(Boolean.valueOf(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("buttonHideShowSummary"))).getAttribute("aria-selected"))==false) {
 			action.driver.findElement(By.xpath(objObjectHomepage.getProperty("buttonHideShowSummary"))).click();
 		}
-				
+		
 		//Validating Product	
 		if(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductNameSummary1"))).getText()!=ProductName1) {
 			action.TakeScreenshot(action.driver,"WrongProductName1");

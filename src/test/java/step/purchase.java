@@ -40,15 +40,14 @@ public class purchase {
 	    action.driver.get(objData.getProperty("baseUrl"));
 	    action.driver.manage().window().maximize();
 	    action.WaitUntil(By.xpath(objObjectHeader.getProperty("buttonSignIn")));
-	    action.TakeScreenshot(action.driver,"beforelogin "+action.timeStamp);
+	    action.TakeScreenshot(action.driver,"1 beforelogin "+action.timeStamp);
 	    
 	}
 
 	@When("user click sign in")
 	public void user_click_sign_in() throws IOException {
 		action.driver.findElement(By.xpath(objObjectHeader.getProperty("buttonSignIn"))).click();
-		action.WaitUntil(By.xpath(objObjectHeader.getProperty("buttonSignIn")));
-		action.TakeScreenshot(action.driver,"loginpage "+action.timeStamp);
+		action.WaitUntil(By.xpath(objObjectHeader.getProperty("buttonSignIn")));		
 	}
 
 	@And("user input valid email and password")
@@ -56,8 +55,9 @@ public class purchase {
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("fieldEmail"))).sendKeys(objData.getProperty("email"));
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("fieldPassword"))).sendKeys(objData.getProperty("password"));
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("buttonSignIn"))).click();
+		action.TakeScreenshot(action.driver,"2 loginpage "+action.timeStamp);
 		action.WaitUntil(By.xpath(objObjectHeader.getProperty("textAccount")));
-		action.TakeScreenshot(action.driver,"afterlogin "+action.timeStamp);
+		action.TakeScreenshot(action.driver,"3 afterlogin "+action.timeStamp);
 	}
 
 	@And("user open jacket category")
@@ -65,17 +65,17 @@ public class purchase {
 	    action.Hover(By.xpath(objObjectHomepage.getProperty("categoryMen")));
 	    action.Hover(By.xpath(objObjectHomepage.getProperty("cagetoryTops")));
 	    action.Hover(By.xpath(objObjectHomepage.getProperty("categoryJacket")));
-	    action.TakeScreenshot(action.driver,"showmenucategory "+action.timeStamp);
+	    action.TakeScreenshot(action.driver,"4 showmenucategory "+action.timeStamp);
 	    action.driver.findElement(By.xpath(objObjectHomepage.getProperty("categoryJacket"))).click();
-	    action.TakeScreenshot(action.driver,"jacketscatalog "+action.timeStamp);
+	    action.TakeScreenshot(action.driver,"5 jacketscatalog "+action.timeStamp);
 	}
 	
 	@And("user buy jacket size XS and color black")
 	public void user_buy_jacket_size_XS_and_color_black() throws InterruptedException{
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("product1SizeXL"))).click();
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("product1ColorBlack"))).click();
-		ProductName1 = action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductName1"))).getText();
-		ProductPrice1 = action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductPrice1"))).getText();
+		ProductName1 = (action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductName1"))).getText()).trim();
+		ProductPrice1 = (action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductPrice1"))).getText()).trim();
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("buttonAddtoCart1"))).click();
 		action.Wait(5);
 	}
@@ -84,8 +84,8 @@ public class purchase {
 	public void user_buy_another_jacket_size_L_and_color_red() throws InterruptedException  {
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("product2SizeL"))).click();
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("product2ColorRed"))).click();
-		ProductName2 = action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductName2"))).getText();
-		ProductPrice2 = action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductPrice2"))).getText();
+		ProductName2 = (action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductName2"))).getText()).trim();
+		ProductPrice2 = (action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductPrice2"))).getText()).trim();
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("buttonAddtoCart2"))).click();
 		action.Wait(5);
 	}
@@ -95,17 +95,17 @@ public class purchase {
 	    action.Hover(By.xpath(objObjectHomepage.getProperty("categoryMen")));
 	    action.Hover(By.xpath(objObjectHomepage.getProperty("cagetoryBottom")));
 	    action.Hover(By.xpath(objObjectHomepage.getProperty("categoryPants")));
-	    action.TakeScreenshot(action.driver,"showmenucategory "+action.timeStamp);
+	    action.TakeScreenshot(action.driver,"6 showmenucategory "+action.timeStamp);
 	    action.driver.findElement(By.xpath(objObjectHomepage.getProperty("categoryPants"))).click();
-	    action.TakeScreenshot(action.driver,"pantsscatalog "+action.timeStamp);
+	    action.TakeScreenshot(action.driver,"7 pantsscatalog "+action.timeStamp);
 	}
 	
 	@And("user buy pants size 32 and color black")
 	public void And_user_buy_pants_size_32_and_color_black() throws InterruptedException {
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("product3Size32"))).click();
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("product3ColorBlack"))).click();
-		ProductName3 = action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductName3"))).getText();
-		ProductPrice3 = action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductPrice3"))).getText();
+		ProductName3 = (action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductName3"))).getText()).trim();
+		ProductPrice3 = (action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductPrice3"))).getText()).trim();
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("buttonAddtoCart3"))).click();
 		action.Wait(5);
 	}
@@ -120,11 +120,13 @@ public class purchase {
 	@And("user fill the form")
 	public void user_fill_the_form() throws IOException {
 		
-		if(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductName3"))).getAttribute("aria-selected")=="false") {
+		action.WaitUntil(By.xpath(objObjectHomepage.getProperty("textProductNameSummary1")));
+		
+		if(Boolean.valueOf(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("buttonHideShowSummary"))).getAttribute("aria-selected"))==false) {
 			action.driver.findElement(By.xpath(objObjectHomepage.getProperty("buttonHideShowSummary"))).click();
 		}
-		
-		//Validating Product
+				
+		//Validating Product	
 		if(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductNameSummary1"))).getText()!=ProductName1) {
 			action.TakeScreenshot(action.driver,"WrongProductName1");
 			throw new Error("Product Name 1 is Wrong it should be "+ProductName1);
@@ -140,39 +142,39 @@ public class purchase {
 			throw new Error("Product Name 3 is Wrong it should be "+ProductName3);
 		}
 		
-		if(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductQtySummary1"))).getText()!="1") {
+		if(Integer.valueOf(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductQtySummary1"))).getText())!=1) {
 			action.TakeScreenshot(action.driver,"WrongProductQty1");
 			throw new Error("Product Qty 1 is Wrong it should be 1");
 		}
 		
-		if(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductQtySummary2"))).getText()!="1") {
+		if(Integer.valueOf(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductQtySummary2"))).getText())!=1) {
 			action.TakeScreenshot(action.driver,"WrongProductQty2");
 			throw new Error("Product Qty 2 is Wrong it should be 1");
 		}
 
-		if(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductQtySummary3"))).getText()!="1") {
+		if(Integer.valueOf(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductQtySummary3"))).getText())!=1) {
 			action.TakeScreenshot(action.driver,"WrongProductQty3");
 			throw new Error("Product Qty 3 is Wrong it should be 1");
 		}
 		
-		if(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductPriceSummary1"))).getText()!=ProductPrice1) {
-			action.TakeScreenshot(action.driver,"WarongProductPrice1");
-			throw new Error("Product Qty 1 is Wrong it should be "+ProductPrice1);
+		if(String.valueOf(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductPriceSummary1"))).getText())!=ProductPrice1) {
+			action.TakeScreenshot(action.driver,"WrongProductPrice1");
+			throw new Error("Product Price 1 is Wrong it should be "+ProductPrice1);
 		}
 		
 		if(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductPriceSummary2"))).getText()!=ProductPrice2) {
-			action.TakeScreenshot(action.driver,"WarongProductPrice2");
-			throw new Error("Product Qty 2 is Wrong it should be "+ProductPrice2);
+			action.TakeScreenshot(action.driver,"WrongProductPrice2");
+			throw new Error("Product Price 2 is Wrong it should be "+ProductPrice2);
 		}
 		
 		if(action.driver.findElement(By.xpath(objObjectHomepage.getProperty("textProductPriceSummary3"))).getText()!=ProductPrice3) {
-			action.TakeScreenshot(action.driver,"WarongProductPrice3");
-			throw new Error("Product Qty 3 is Wrong it should be "+ProductPrice3);
+			action.TakeScreenshot(action.driver,"WrongProductPrice3");
+			throw new Error("Product Price 3 is Wrong it should be "+ProductPrice3);
 		}
 		
-		action.TakeScreenshot(action.driver,"checkout "+action.timeStamp);
-		
 		action.driver.findElement(By.xpath(objObjectHomepage.getProperty("fieldAddress"))).sendKeys(objData.getProperty("address"));
+		
+		action.TakeScreenshot(action.driver,"8 checkout "+action.timeStamp);
 	}
 	
 	@And("user proceed to payments")
